@@ -1,0 +1,13 @@
+merhaba , yazılım mühendisliği öğrenciyim algoritma ödevim var . atmden para ekme algoritmasını yapar mısn Harika — yardımcı olurum! Aşağıda hem ATM'ye para yatırma (ekleme) hem de ATM'den para çekme (para çekme) için açık, adım adım algoritmalar, hata durumları, güvenlik/işlem kontrolleri ve örnek pseudocode (akış mantığı) verdim. Ödevine yapıştırıp kullanabileceğin şekilde düzenledim — istersen bunu doğrudan akış diyagramına veya kod halinde (Python/Java/C# vb.) haline getiririm.
+
+1) Genel varsayımlar
+
+Kullanıcı bir kart ve PIN ile işlem başlatır.
+
+Banka sunucusuna erişim var (ağ bağlantısı).
+
+Hesap bakiyesi, günlük limitler ve ATM nakit durumu sorgulanabiliyor.
+
+İşlemler atomik (ya başarılı tamamlanır ya da geri alınır).
+
+Kötü amaçlı denemelere karşı kilit/sınır mekanizması var (örn. 3 yanlış PIN).Harika — yardımcı olurum! Aşağıda hem ATM'ye para yatırma (ekleme) hem de ATM'den para çekme (para çekme) için açık, adım adım algoritmalar, hata durumları, güvenlik/işlem kontrolleri ve örnek pseudocode (akış mantığı) verdim. Ödevine yapıştırıp kullanabileceğin şekilde düzenledim — istersen bunu doğrudan akış diyagramına veya kod halinde (Python/Java/C# vb.) haline getiririm
