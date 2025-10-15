@@ -1,0 +1,60 @@
+FUNCTION atm_withdraw():
+    card = wait_for_card_insert()
+    IF not validate_card(card):
+        display("Geçersiz kart")
+        eject_card(card)
+        RETURN
+
+    attempts = 0
+    WHILE attempts < 3:
+        pin = prompt_pin()
+        IF verify_pin(card, pin):
+            BREAK
+        ELSE:
+            attempts += 1
+            display("Yanlış PIN. Kalan hak: " + (3 - attempts))
+    IF attempts == 3:
+        retain_card(card)
+        log_event("Kart tutuldu: 3 yanlış PIN")
+        RETURN
+
+    account = select_account(card)
+    requested_amount = prompt_amount()
+    IF not valid_amount(requested_amount):
+        display("Geçersiz tutar")
+        eject_card(card)
+        RETURN
+
+    IF requested_amount > account.available_balance:
+        display("Yetersiz bakiye")
+        eject_card(card)
+        RETURN
+
+    IF requested_amount > account.daily_limit:
+        display("Günlük limit aşıldı")
+        eject_card(card)
+        RETURN
+
+    # Check ATM cash availability and compute banknote distribution
+    can_dispense, distribution = compute_distribution(requested_amount, atm_cash_inventory)
+    IF not can_dispense:
+        display("ATM bu tutarı veremiyor. Lütfen farklı tutar girin.")
+        eject_card(card)
+        RETURN
+
+    # Begin atomic transaction
+    BEGIN TRANSACTION
+    TRY:
+        account.balance -= requested_amount
+        atm_cash_inventory -= distribution
+        dispense_cash(distribution)
+        print_receipt_if_requested(account, requested_amount, distribution)
+        log_transaction(card, account, requested_amount, distribution, success=True)
+        COMMIT
+        display("İşlem başarılı. Lütfen paranızı alın.")
+    EXCEPT Exception as e:
+        ROLLBACK
+        log_transaction(..., success=False, error=e)
+        display("İşlem sırasında hata oluştu. Lütfen banka ile iletişime geçin.")
+    FINALLY:
+        eject_card(card)
