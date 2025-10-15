@@ -1,0 +1,47 @@
+digraph ATM_Para_Cekme {
+    rankdir=TB;
+    node [shape=rectangle, style=rounded, fontname="Arial", fontsize=11];
+
+    Start [label="Başla", shape=ellipse, style=filled, fillcolor=lightblue];
+    InsertCard [label="Kartı Tak"];
+    ValidateCard [label="Kart Geçerli mi?"];
+    EnterPIN [label="PIN Gir"];
+    CheckPIN [label="PIN Doğru mu?"];
+    BlockCard [label="Kart Bloke Edildi\n(3 Hatalı Deneme)", shape=rectangle, fillcolor=mistyrose, style="rounded,filled"];
+    SelectOperation [label="İşlem Seç (Para Çekme)"];
+    EnterAmount [label="Çekilecek Tutarı Gir"];
+    CheckAmount [label="Geçerli Tutar mı?"];
+    CheckBalance [label="Bakiyen Yeterli mi?"];
+    CheckLimit [label="Günlük Limit Aşıldı mı?"];
+    CheckCash [label="ATM’de Yeterli Nakit Var mı?"];
+    WithdrawMoney [label="Parayı Ver"];
+    PrintReceipt [label="Makbuz Yazdır"];
+    End [label="Bitiş", shape=ellipse, style=filled, fillcolor=lightblue];
+    Error [label="İşlem Başarısız / Uyarı Göster", shape=rectangle, fillcolor=mistyrose, style="rounded,filled"];
+
+    // Akış yönü
+    Start -> InsertCard -> ValidateCard;
+    ValidateCard -> EnterPIN [label="Evet"];
+    ValidateCard -> Error [label="Hayır"];
+
+    EnterPIN -> CheckPIN;
+    CheckPIN -> SelectOperation [label="Doğru"];
+    CheckPIN -> EnterPIN [label="Yanlış (Deneme Artır)", style=dashed];
+    CheckPIN -> BlockCard [label="3 Hatalı Deneme"];
+
+    SelectOperation -> EnterAmount;
+    EnterAmount -> CheckAmount;
+    CheckAmount -> CheckBalance [label="Evet"];
+    CheckAmount -> Error [label="Hayır"];
+
+    CheckBalance -> CheckLimit [label="Evet"];
+    CheckBalance -> Error [label="Hayır (Yetersiz Bakiye)"];
+
+    CheckLimit -> CheckCash [label="Aşılmadı"];
+    CheckLimit -> Error [label="Aşıldı"];
+
+    CheckCash -> WithdrawMoney [label="Yeterli"];
+    CheckCash -> Error [label="Yetersiz"];
+
+    WithdrawMoney -> PrintReceipt -> End;
+}
