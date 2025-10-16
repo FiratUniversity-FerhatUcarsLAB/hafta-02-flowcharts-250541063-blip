@@ -1,0 +1,56 @@
+ALGORITMA ÜniversiteDersKayit
+
+    BAŞLA
+
+    // 1. Öğrenci giriş işlemi
+    ogrenci_no ← kullanıcıdan_al("Öğrenci numaranızı giriniz:")
+    sifre ← kullanıcıdan_al("Şifrenizi giriniz:")
+
+    EĞER giriş_dogrula(ogrenci_no, sifre) = GEÇERLİ İSE
+        yazdır("Giriş başarılı.")
+    DEĞİLSE
+        yazdır("Hatalı giriş! Lütfen tekrar deneyin.")
+        BİTİR
+    SON
+
+    // 2. Açılan derslerin listesi
+    ders_listesi ← açılan_dersleri_görüntüle()
+    yazdır("Açılan Dersler:")
+    yazdır(ders_listesi)
+
+    // 3. Ders seçimi
+    seçilen_dersler ← boş_liste
+
+    TEKRAR
+        ders ← kullanıcıdan_al("Eklemek istediğiniz dersin kodunu giriniz:")
+        EĞER ders mevcutsa ders_listesi içinde
+            seçilen_dersler'e_ekle(ders)
+        DEĞİLSE
+            yazdır("Hatalı ders kodu.")
+        SON
+
+        devam ← kullanıcıdan_al("Başka ders eklemek istiyor musunuz? (E/H)")
+    DEĞİLSE devam = 'H' olana kadar TEKRAR ET
+
+    // 4. Kredi kontrolü
+    toplam_kredi ← kredi_hesapla(seçilen_dersler)
+    EĞER toplam_kredi > 40 İSE
+        yazdır("Kredi sınırı aşıldı! Lütfen bazı dersleri çıkarın.")
+        BİTİR
+    SON
+
+    // 5. Çakışma kontrolü
+    EĞER ders_programi_cakisiyor_mu(seçilen_dersler) = EVET İSE
+        yazdır("Ders saatleri çakışıyor! Lütfen değiştirin.")
+        BİTİR
+    SON
+
+    // 6. Kayıt işlemi
+    kaydet(seçilen_dersler)
+    yazdır("Ders kaydınız başarıyla tamamlandı.")
+    yazdır("Seçtiğiniz dersler:")
+    yazdır(seçilen_dersler)
+
+    BİTİR
+
+SON_ALGORITMA
