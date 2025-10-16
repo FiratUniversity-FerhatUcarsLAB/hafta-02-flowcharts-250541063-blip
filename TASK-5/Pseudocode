@@ -1,0 +1,46 @@
+ALGORITMA AkilliEvGuvenlikSistemi
+
+    BAŞLA
+
+    // 1. Sistem başlangıcı
+    sistem_durumu ← "AKTİF"
+    yazdır("Akıllı Ev Güvenlik Sistemi Başlatıldı")
+
+    // 2. Sensör verilerini oku
+    kapı_sensörü ← veri_oku("kapı sensörü")
+    hareket_sensörü ← veri_oku("hareket sensörü")
+    duman_sensörü ← veri_oku("duman sensörü")
+    gaz_sensörü ← veri_oku("gaz sensörü")
+
+    // 3. Tehdit kontrolü
+    EĞER kapı_sensörü = "açık" VE sistem_durumu = "AKTİF" İSE
+        yazdır("Kapı izinsiz açıldı!")
+        alarm_cal()
+        kullanıcıya_bildir("Kapı ihlali tespit edildi!")
+    SON
+
+    EĞER hareket_sensörü = "hareket var" VE sistem_durumu = "AKTİF" İSE
+        yazdır("Hareket tespit edildi!")
+        alarm_cal()
+        kullanıcıya_bildir("Hareket algılandı!")
+    SON
+
+    EĞER duman_sensörü = "duman var" İSE
+        yazdır("Yangın tehlikesi!")
+        alarm_cal()
+        itfaiyeye_bildir()
+    SON
+
+    EĞER gaz_sensörü = "gaz sızıntısı" İSE
+        yazdır("Gaz kaçağı tespit edildi!")
+        alarm_cal()
+        gaz_vana_kapat()
+        kullanıcıya_bildir("Gaz kaçağı uyarısı!")
+    SON
+
+    // 4. Durum raporu
+    yazdır("Tüm sistemler kontrol edildi. Güvenlik aktif.")
+
+    BİTİR
+
+SON_ALGORITMA
