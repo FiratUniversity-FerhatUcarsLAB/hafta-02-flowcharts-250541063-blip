@@ -1,0 +1,27 @@
+digraph OnlineAlisverisSepeti {
+    node [shape=rectangle, style=rounded, fontname="Arial"];
+    start [label="Başla", shape=ellipse];
+    login [label="Kullanıcı giriş yapar veya misafir olarak devam eder"];
+    list [label="Ürün kataloğunu görüntüle"];
+    select [label="Ürün seç ve sepete ekle"];
+    addmore [label="Başka ürün eklemek istiyor mu?"];
+    viewcart [label="Sepeti görüntüle"];
+    update [label="Sepeti güncelle (isteğe bağlı)"];
+    calc [label="Toplam tutarı hesapla"];
+    payinfo [label="Ödeme bilgilerini gir"];
+    confirm [label="Ödemeyi onaylıyor mu?"];
+    success [label="Ödeme başarılı → Sipariş oluştur"];
+    fail [label="Ödeme başarısız → Tekrar dene"];
+    cancel [label="İşlem iptal edildi"];
+    end [label="Bitir", shape=ellipse];
+
+    start -> login -> list -> select -> addmore;
+    addmore -> select [label="Evet"];
+    addmore -> viewcart [label="Hayır"];
+    viewcart -> update -> calc -> payinfo -> confirm;
+    confirm -> success [label="Evet"];
+    confirm -> cancel [label="Hayır"];
+    success -> end;
+    fail -> end;
+    cancel -> end;
+}
