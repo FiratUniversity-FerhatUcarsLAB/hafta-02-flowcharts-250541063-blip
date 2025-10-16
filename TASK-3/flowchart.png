@@ -1,0 +1,25 @@
+digraph HastaneRandevuSistemi {
+    node [shape=rectangle, style=rounded, fontname="Arial"];
+    start [label="Başla", shape=ellipse];
+    login [label="Hasta bilgilerini gir (TC, şifre)"];
+    checklogin [label="Giriş geçerli mi?"];
+    fail [label="Hatalı giriş → Tekrar dene"];
+    dept [label="Bölüm seç"];
+    doctor [label="Doktor seç"];
+    date [label="Tarih ve saat seç"];
+    check [label="Seçilen tarih/saat uygun mu?"];
+    create [label="Randevu oluştur"];
+    info [label="Randevu bilgilerini göster"];
+    full [label="Seçilen zaman dolu → Yeni zaman seç"];
+    end [label="Bitir", shape=ellipse];
+
+    start -> login -> checklogin;
+    checklogin -> fail [label="Hayır"];
+    checklogin -> dept [label="Evet"];
+    dept -> doctor -> date -> check;
+    check -> create [label="Evet"];
+    create -> info -> end;
+    check -> full [label="Hayır"];
+    full -> date;
+    fail -> end;
+}
