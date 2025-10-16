@@ -1,0 +1,46 @@
+ALGORITMA OnlineAlisverisSepeti
+
+    BAŞLA
+
+    kullanıcı_girişi ← giriş_yap() veya misafir_girişi()
+
+    ürün_listesi ← ürün_kataloğunu_görüntüle()
+
+    SEPET ← boş_liste
+
+    TEKRAR
+        ürün ← ürün_seç(ürün_listesi)
+        adet ← kullanıcıdan_al("Kaç adet eklemek istiyorsunuz?")
+        SEPETE_EKLE(SEPET, ürün, adet)
+
+        devam ← kullanıcıdan_al("Başka ürün eklemek ister misiniz? (E/H)")
+    DEĞİLSE devam = 'H' olana kadar TEKRAR ET
+
+    SEPETİ_GÖRÜNTÜLE(SEPET)
+
+    İSTEĞE_BAĞLI:
+        SEPET_GÜNCELLE(SEPET)  // ürün çıkarma veya adet değiştirme işlemleri
+
+    toplam_tutar ← 0
+    HER ürün İÇİN SEPET:
+        toplam_tutar ← toplam_tutar + (ürün.fiyat × ürün.adet)
+
+    kullanıcıya_göster("Toplam tutar: " + toplam_tutar)
+
+    ödeme_bilgileri ← kullanıcıdan_al("Ödeme bilgilerini giriniz")
+    onay ← kullanıcıdan_al("Ödemeyi onaylıyor musunuz? (E/H)")
+
+    EĞER onay = 'E' İSE
+        ödeme_durumu ← ödeme_yap(ödeme_bilgileri, toplam_tutar)
+        EĞER ödeme_durumu = BAŞARILI İSE
+            yazdır("Siparişiniz başarıyla oluşturuldu.")
+        DEĞİLSE
+            yazdır("Ödeme başarısız. Lütfen tekrar deneyin.")
+        SON
+    DEĞİLSE
+        yazdır("İşlem iptal edildi.")
+    SON
+
+    BİTİR
+
+SON_ALGORITMA
