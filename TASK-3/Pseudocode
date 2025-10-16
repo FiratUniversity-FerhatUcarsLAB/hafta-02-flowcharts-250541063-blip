@@ -1,0 +1,39 @@
+ALGORITMA HastaneRandevuSistemi
+
+    BAŞLA
+
+    // 1. Kullanıcı giriş işlemleri
+    hasta_bilgisi ← kullanıcıdan_al("TC Kimlik No giriniz:")
+    sifre ← kullanıcıdan_al("Şifrenizi giriniz:")
+
+    EĞER giriş_dogrula(hasta_bilgisi, sifre) = GEÇERLİ İSE
+        yazdır("Giriş başarılı.")
+    DEĞİLSE
+        yazdır("Hatalı giriş! Lütfen tekrar deneyin.")
+        BİTİR
+    SON
+
+    // 2. Bölüm seçimi
+    bölüm_listesi ← ["Dahiliye", "Kardiyoloji", "Göz", "Ortopedi", "Kadın Doğum"]
+    bölüm ← kullanıcıdan_al("Randevu almak istediğiniz bölümü seçiniz:")
+
+    // 3. Doktor seçimi
+    doktor_listesi ← doktorları_getir(bölüm)
+    doktor ← kullanıcıdan_al("Doktor seçiniz:")
+
+    // 4. Tarih ve saat seçimi
+    tarih ← kullanıcıdan_al("Randevu tarihini giriniz (GG/AA/YYYY):")
+    saat ← kullanıcıdan_al("Randevu saatini giriniz (HH:MM):")
+
+    // 5. Uygunluk kontrolü
+    EĞER randevu_dolu_mu(doktor, tarih, saat) = HAYIR İSE
+        randevu_olustur(hasta_bilgisi, doktor, tarih, saat)
+        yazdır("Randevunuz başarıyla oluşturuldu.")
+        yazdır("Randevu Bilgileri: " + bölüm + " - " + doktor + " - " + tarih + " - " + saat)
+    DEĞİLSE
+        yazdır("Seçilen tarih ve saat dolu. Lütfen başka bir zaman seçiniz.")
+    SON
+
+    BİTİR
+
+SON_ALGORITMA
