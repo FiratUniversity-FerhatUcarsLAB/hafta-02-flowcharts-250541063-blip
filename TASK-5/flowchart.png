@@ -1,0 +1,30 @@
+digraph AkilliEvGuvenlikSistemi {
+    node [shape=rectangle, style=rounded, fontname="Arial"];
+    start [label="Başla", shape=ellipse];
+    init [label="Sistem başlat\nDurum = AKTİF"];
+    read [label="Sensör verilerini oku:\nKapı, Hareket, Duman, Gaz"];
+    door [label="Kapı açık mı?"];
+    motion [label="Hareket var mı?"];
+    smoke [label="Duman tespit edildi mi?"];
+    gas [label="Gaz kaçağı var mı?"];
+    alarm [label="Alarm çal ve bildir"];
+    fire [label="Yangın uyarısı gönder"];
+    gaswarn [label="Gaz vanasını kapat ve bildir"];
+    report [label="Durum raporu yazdır"];
+    end [label="Bitir", shape=ellipse];
+
+    start -> init -> read;
+    read -> door -> motion -> smoke -> gas;
+    door -> alarm [label="Evet"];
+    motion -> alarm [label="Evet"];
+    smoke -> fire [label="Evet"];
+    gas -> gaswarn [label="Evet"];
+    door -> motion [label="Hayır"];
+    motion -> smoke [label="Hayır"];
+    smoke -> gas [label="Hayır"];
+    gas -> report [label="Hayır"];
+    alarm -> report;
+    fire -> report;
+    gaswarn -> report;
+    report -> end;
+}
